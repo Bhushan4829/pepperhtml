@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p id="responseText">Waiting for the latest response...</p>
+    </div>
+    <script>
+        function fetchLatestResponse() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://example.com/latest-response.txt'); // Replace with your content source URL
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Update the content of the <p> element with the new response text
+                    document.getElementById('responseText').innerText = xhr.responseText;
+                } else {
+                    // Handle error (if any)
+                    console.error('Error fetching latest response:', xhr.statusText);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('Request failed');
+            };
+            xhr.send();
+        }
+
+        // Fetch the latest response immediately when the page loads
+        fetchLatestResponse();
+
+        // Optionally, set an interval to fetch the latest response periodically
+        // For example, every 30 seconds
+        setInterval(fetchLatestResponse, 30000);
+    </script>
+</body>
+</html>
